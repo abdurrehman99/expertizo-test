@@ -13,6 +13,8 @@ class Quiz extends Component {
             ansFalse : '',
             disabled : false,
             progressCount : 5,
+            score : 0,
+            rightAns : 0,
             questions : [
                 {
                     category: "Entertainment  Video Games",
@@ -230,6 +232,8 @@ class Quiz extends Component {
                 correctAns : true,
                 ansCorrect : 'Correct Answer !',
                 disabled : true,
+                score : this.state.score+5,
+                rightAns : this.state.rightAns+1,
             });
         }
         else{
@@ -261,7 +265,7 @@ class Quiz extends Component {
             <div className='container'>
                 <Progress value={this.state.progressCount} />
                 <h1 className='mt-3'>Question {this.state.count+1} of 20</h1>
-                <h4 className='mb-3'>Category : {this.state.questions[this.state.count].category}</h4>
+                <h5 className='mb-3'>Category : {this.state.questions[this.state.count].category}</h5>
                 {/* {
                     console.log(this.state.questions[this.state.count].difficulty,stars)
                 } */}
@@ -292,9 +296,8 @@ class Quiz extends Component {
                 }
                 <div className='mb-4'></div>
                 <Progress multi>
-                    <Progress bar color='primary' value={this.state.progressCount - 2} >Score</Progress>
-                    <Progress bar color="secondary" value={20} />
-                    <Progress bar color="info" value={55} >Max Score</Progress>
+                <Progress bar color='info' value={this.state.score} >Score {this.state.rightAns/20*100}%</Progress>
+                    {/* <Progress bar color="info" value={55} >Max Score</Progress> */}
                 </Progress>
             </div>
         )
