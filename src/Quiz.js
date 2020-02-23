@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import StarRatings from 'react-star-ratings';
 import { Progress } from 'reactstrap';
+import StarRatingComponent from 'react-star-rating-component';
 
 class Quiz extends Component {
 
@@ -225,7 +225,7 @@ class Quiz extends Component {
     }
     ansChk = (e)=>{
         if(this.state.questions[this.state.count].correct_answer === e.target.value ){
-            console.log('ans is correct');
+            console.log('Ans is correct');
             this.setState({
                 correctAns : true,
                 ansCorrect : 'Correct Answer !',
@@ -233,6 +233,7 @@ class Quiz extends Component {
             });
         }
         else{
+          console.log('Ans is Wrong !');
             this.setState({
                 correctAns : true,
                 ansWrong : 'Wrong Answer !',
@@ -241,49 +242,37 @@ class Quiz extends Component {
         }
     }
     render() {
-        let rating = 0
-        const hard = (
-        <StarRatings
-            rating={3}
-            starRatedColor="dark"
-            numberOfStars={3}
-            name='rating'
-            />);
+        let stars = 0;
+        if(this.state.questions[this.state.count].difficulty === 'hard'){
+            stars = 3;
+            console.log(this.state.questions[this.state.count].difficulty,stars);
+        }
+        else if(this.state.questions[this.state.count].difficulty === 'medium'){
+            stars = 2;
+            console.log(this.state.questions[this.state.count].difficulty,stars);
 
-        const medium = (<StarRatings
-            rating={2}
-            starRatedColor="dark"
-            numberOfStars={3}
-            name='rating'
-        />);
+        }
+        else if(this.state.questions[this.state.count].difficulty === 'easy'){
+            stars = 1;
+            console.log(this.state.questions[this.state.count].difficulty,stars);
 
-        const easy = (<StarRatings
-            rating={1}
-            starRatedColor="dark"
-            numberOfStars={3}
-            name='rating'
-        />);
-            
-
+        }
         return (
             <div className='container'>
                 <Progress value={this.state.progressCount} />
-                <h1>Question {this.state.count+1} of 20</h1>
-                <h4>Category : {this.state.questions[this.state.count].category}</h4>
-                {
-                    console.log(this.state.questions[this.state.count].difficulty)
-                    
-                }
-            
-                    <StarRatings
-                    rating={1}
-                    starRatedColor="dark"
-                    numberOfStars={3}
-                    name='rating'
-                    />
-                        
-
-                <h2 className='my-4'>{this.state.questions[this.state.count].question}</h2>
+                <h1 className='mt-3'>Question {this.state.count+1} of 20</h1>
+                <h4 className='mb-3'>Category : {this.state.questions[this.state.count].category}</h4>
+                {/* {
+                    console.log(this.state.questions[this.state.count].difficulty,stars)
+                } */}
+                    <h1 className='m-0'>
+                        <StarRatingComponent 
+                            name="rate1" 
+                            starCount={3}
+                            value={stars}
+                        />
+                    </h1>
+                <h2 className='mt-0 mb-4'>{this.state.questions[this.state.count].question}</h2>
 
                 <button disabled={this.state.disabled} className='btn btn-outline-primary mr-2' value={ this.state.questions[this.state.count].incorrect_answers[2] } onClick={ (e)=>this.ansChk(e) } >{this.state.questions[this.state.count].incorrect_answers[2]}</button>
 
@@ -298,10 +287,15 @@ class Quiz extends Component {
                     <React.Fragment>
                         <h2 className='text-success my-4'>{this.state.ansCorrect}</h2>
                         <h2 className='text-danger my-4'>{this.state.ansWrong}</h2>
-                        <button className='w-25 btn btn-outline-info' onClick={ this.qsChange }>Next Question</button>
+                        <button className='w-25 btn btn-outline-info mb-4' onClick={ this.qsChange }>Next Question</button>
                     </React.Fragment> : null
                 }
-                
+                <div className='mb-4'></div>
+                <Progress multi>
+                    <Progress bar color='primary' value={this.state.progressCount - 2} >Score</Progress>
+                    <Progress bar color="secondary" value={20} />
+                    <Progress bar color="info" value={55} >Max Score</Progress>
+                </Progress>
             </div>
         )
     }
