@@ -298,7 +298,7 @@ class Quiz extends Component {
                     <React.Fragment>
                         <h2 className='text-success my-4'>{this.state.ansCorrect}</h2>
                         <h2 className='text-danger my-4'>{this.state.ansWrong}</h2>
-                        <button className='w-25 btn btn-outlinr-info' onClick={ this.qsChange }>Next Question</button>
+                        <button className='w-25 btn btn-outline-info' onClick={ this.qsChange }>Next Question</button>
                     </React.Fragment> : null
                 }
                 
