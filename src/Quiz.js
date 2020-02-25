@@ -15,6 +15,7 @@ class Quiz extends Component {
             progressCount : 5,
             score : 0,
             rightAns : 0,
+            isCompleted : false ,
             questions : [
                 {
                     category: "Entertainment  Video Games",
@@ -192,7 +193,7 @@ class Quiz extends Component {
                     category: "Entertainment Video Games",
                     type: "multiple",
                     difficulty: "medium",
-                    questio: "In Left 4 Dead  which campaign has the protagonists going through a subway in order to reach a hospital for evacuation ",
+                    question: "In Left 4 Dead  which campaign has the protagonists going through a subway in order to reach a hospital for evacuation ",
                     correct_answer: "No Mercy",
                     incorrect_answers: [
                       "Subway Sprint",
@@ -224,7 +225,6 @@ class Quiz extends Component {
               }
             });
         }
-        
     }
     ansChk = (e)=>{
         if(this.state.questions[this.state.count].correct_answer === e.target.value ){
@@ -246,6 +246,12 @@ class Quiz extends Component {
                 ansWrong : 'Wrong Answer !',
                 disabled : true,
             });
+        }
+
+        if(this.state.count === 19){
+          this.setState({
+            isCompleted :true,
+          });
         }
     }
     render() {
@@ -304,8 +310,11 @@ class Quiz extends Component {
                     <React.Fragment>
                         <h2 className='text-success my-4'>{this.state.ansCorrect}</h2>
                         <h2 className='text-danger my-4'>{this.state.ansWrong}</h2>
-                        <button className='w-25 btn btn-outline-info mb-4' onClick={ this.qsChange }>Next Question</button>
+                        <button disabled={this.state.isCompleted} className='w-25 btn btn-outline-info mb-4' onClick={ this.qsChange }>Next Question</button>
                     </React.Fragment> : null
+                }
+                {
+                  this.state.isCompleted ? <h1 className='text-center text-primary'>Quiz Completed !</h1> : null
                 }
                 <div className='mb-4'></div>
                 <Progress multi>
