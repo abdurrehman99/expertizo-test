@@ -280,38 +280,24 @@ class Quiz extends Component {
                         />
                     </h1>
                 <h2 className='mt-0 mb-4'>{this.state.questions[this.state.count].question}</h2>
-
-                <button 
-                  disabled={this.state.disabled} 
-                  className='btn btn-outline-primary mr-2' 
-                  value={ this.state.questions[this.state.count].incorrect_answers[2] } 
-                  onClick={ (e)=>this.ansChk(e) } > 
-                  {this.state.questions[this.state.count].incorrect_answers[2]}
-                </button>
-
-                <button 
-                  disabled={this.state.disabled} 
-                  className='btn btn-outline-primary mr-2' 
-                  value={ this.state.questions[this.state.count].incorrect_answers[0] } 
-                  onClick={ (e)=>this.ansChk(e) } >
-                    {this.state.questions[this.state.count].incorrect_answers[0]}
-                </button>
-
-                <button 
+                {
+                  this.state.questions[this.state.count].incorrect_answers.map( (ans,index) => {
+                    return <button key = { index }
+                              disabled={this.state.disabled} 
+                              className='btn btn-outline-primary mr-2' 
+                              value={ ans } 
+                              onClick={ (e)=>this.ansChk(e) } > 
+                              { ans }
+                            </button>
+                  })
+                }
+                 <button 
                   disabled={this.state.disabled} 
                   className='btn btn-outline-primary mr-2' 
                   value={ this.state.questions[this.state.count].correct_answer } 
                   onClick={ (e)=>this.ansChk(e) } >
                     {this.state.questions[this.state.count].correct_answer}
                 </button>
-
-                <button 
-                  disabled={this.state.disabled} 
-                  className='btn btn-outline-primary mr-2' 
-                  value={ this.state.questions[this.state.count].incorrect_answers[1] } 
-                  onClick={ (e)=>this.ansChk(e) } >
-                    {this.state.questions[this.state.count].incorrect_answers[1]}
-                </button><br/>
                 
                 {
                     this.state.correctAns ? 
@@ -323,8 +309,7 @@ class Quiz extends Component {
                 }
                 <div className='mb-4'></div>
                 <Progress multi>
-                <Progress bar color='info' value={this.state.score} >Score {this.state.rightAns/20*100}%</Progress>
-                    {/* <Progress bar color="info" value={55} >Max Score</Progress> */}
+                  <Progress bar color='info' value={this.state.score} >Score {this.state.rightAns/20*100}%</Progress>
                 </Progress>
             </div>
         )
