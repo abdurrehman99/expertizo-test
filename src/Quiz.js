@@ -213,14 +213,15 @@ class Quiz extends Component {
     }
     qsChange = ()=>{
         if(this.state.count !== 19) {
-            this.setState({
-                count : this.state.count+1,
+            this.setState( (prevState,props) => {
+              return {
+                count : prevState.count+1,
                 correctAns : false,
                 disabled : false,
-                progressCount : this.state.progressCount+5,
+                progressCount : prevState.progressCount+5,
                 ansCorrect : '',
                 ansWrong : ''
-
+              }
             });
         }
         
@@ -228,12 +229,14 @@ class Quiz extends Component {
     ansChk = (e)=>{
         if(this.state.questions[this.state.count].correct_answer === e.target.value ){
             console.log('Ans is correct');
-            this.setState({
+            this.setState( (prevState,props)=> {
+              return {
                 correctAns : true,
                 ansCorrect : 'Correct Answer !',
                 disabled : true,
-                score : this.state.score+5,
-                rightAns : this.state.rightAns+1,
+                score : prevState.score+5,
+                rightAns : prevState.rightAns+1,
+              }
             });
         }
         else{
@@ -263,12 +266,12 @@ class Quiz extends Component {
         }
         return (
             <div className='container'>
+
+                {/* <input name='Ebad' onChange={this.props.change} /> */}
+
                 <Progress value={this.state.progressCount} />
                 <h1 className='mt-3'>Question {this.state.count+1} of 20</h1>
                 <h5 className='mb-3'>Category : {this.state.questions[this.state.count].category}</h5>
-                {/* {
-                    console.log(this.state.questions[this.state.count].difficulty,stars)
-                } */}
                     <h1 className='m-0'>
                         <StarRatingComponent 
                             name="rate1" 
@@ -278,13 +281,37 @@ class Quiz extends Component {
                     </h1>
                 <h2 className='mt-0 mb-4'>{this.state.questions[this.state.count].question}</h2>
 
-                <button disabled={this.state.disabled} className='btn btn-outline-primary mr-2' value={ this.state.questions[this.state.count].incorrect_answers[2] } onClick={ (e)=>this.ansChk(e) } >{this.state.questions[this.state.count].incorrect_answers[2]}</button>
+                <button 
+                  disabled={this.state.disabled} 
+                  className='btn btn-outline-primary mr-2' 
+                  value={ this.state.questions[this.state.count].incorrect_answers[2] } 
+                  onClick={ (e)=>this.ansChk(e) } > 
+                  {this.state.questions[this.state.count].incorrect_answers[2]}
+                </button>
 
-                <button disabled={this.state.disabled} className='btn btn-outline-primary mr-2' value={ this.state.questions[this.state.count].incorrect_answers[0] } onClick={ (e)=>this.ansChk(e) } >{this.state.questions[this.state.count].incorrect_answers[0]}</button>
+                <button 
+                  disabled={this.state.disabled} 
+                  className='btn btn-outline-primary mr-2' 
+                  value={ this.state.questions[this.state.count].incorrect_answers[0] } 
+                  onClick={ (e)=>this.ansChk(e) } >
+                    {this.state.questions[this.state.count].incorrect_answers[0]}
+                </button>
 
-                <button disabled={this.state.disabled} className='btn btn-outline-primary mr-2' value={ this.state.questions[this.state.count].correct_answer } onClick={ (e)=>this.ansChk(e) } >{this.state.questions[this.state.count].correct_answer}</button>
+                <button 
+                  disabled={this.state.disabled} 
+                  className='btn btn-outline-primary mr-2' 
+                  value={ this.state.questions[this.state.count].correct_answer } 
+                  onClick={ (e)=>this.ansChk(e) } >
+                    {this.state.questions[this.state.count].correct_answer}
+                </button>
 
-                <button disabled={this.state.disabled} className='btn btn-outline-primary mr-2' value={ this.state.questions[this.state.count].incorrect_answers[1] } onClick={ (e)=>this.ansChk(e) } >{this.state.questions[this.state.count].incorrect_answers[1]}</button><br/>
+                <button 
+                  disabled={this.state.disabled} 
+                  className='btn btn-outline-primary mr-2' 
+                  value={ this.state.questions[this.state.count].incorrect_answers[1] } 
+                  onClick={ (e)=>this.ansChk(e) } >
+                    {this.state.questions[this.state.count].incorrect_answers[1]}
+                </button><br/>
                 
                 {
                     this.state.correctAns ? 

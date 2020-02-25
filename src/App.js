@@ -3,9 +3,13 @@ import './App.css';
 import Quiz from './Quiz'
 
 function App() {
+
+  const nameChange = (e) =>{
+    console.log(e.target.value);
+  }
   return (
     <div className="App">
-      <Quiz />
+      <Quiz change={ nameChange } />
     </div>
   );
 }
